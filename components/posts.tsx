@@ -11,7 +11,7 @@ export const Posts = async ({ type }: Posts) => {
 
   return (
     <div className="flex-1 flex flex-col gap-4 p-4 overflow-scroll">
-      {postData.hits.map((post) => (
+      {postData.hits.map((post: any) => (
         <PostCard
           key={post.story_id}
           to={`/${type}/${post.story_id}`}
