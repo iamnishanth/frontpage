@@ -1,11 +1,16 @@
+const TEN_MINUTES = 10 * 60;
+
 export const getPosts = async (type: string) => {
   if (type === "news") {
-    const response = await fetch("https://hn.algolia.com/api/v1/search?tags=front_page");
+    const response = await fetch("https://hn.algolia.com/api/v1/search?tags=front_page", {
+      next: { revalidate: TEN_MINUTES },
+    });
     const data = await response.json();
     return data;
   } else if (type === "newest") {
     const response = await fetch(
       "https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=50",
+      { next: { revalidate: TEN_MINUTES } },
     );
     const data = await response.json();
     return data;
@@ -15,6 +20,7 @@ export const getPosts = async (type: string) => {
 
     const response = await fetch(
       `https://hn.algolia.com/api/v1/search?tags=ask_hn&numericFilters=created_at_i>${timestamp24HoursAgo}&hitsPerPage=50`,
+      { next: { revalidate: TEN_MINUTES } },
     );
     const data = await response.json();
     return data;
@@ -24,6 +30,7 @@ export const getPosts = async (type: string) => {
 
     const response = await fetch(
       `https://hn.algolia.com/api/v1/search?tags=show_hn&numericFilters=created_at_i>${timestamp24HoursAgo}&hitsPerPage=50`,
+      { next: { revalidate: TEN_MINUTES } },
     );
     const data = await response.json();
     return data;
@@ -31,7 +38,9 @@ export const getPosts = async (type: string) => {
 };
 
 export const getPost = async (id: string) => {
-  const response = await fetch(`https://hn.algolia.com/api/v1/items/${id}`);
+  const response = await fetch(`https://hn.algolia.com/api/v1/items/${id}`, {
+    next: { revalidate: TEN_MINUTES },
+  });
   const data = await response.json();
 
   return data;
