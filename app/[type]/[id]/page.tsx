@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, MoveLeft } from "lucide-react";
 
 import { Comments } from "@/components/comments";
 import { Separator } from "@/components/ui/separator";
@@ -16,7 +17,10 @@ export default async function PostPage({ params }: { params: { type: string; id:
 
   return (
     <div className="flex-1 flex flex-col">
-      <header className="w-full flex items-center justify-end min-h-[52px] h-[52px] px-4 gap-4">
+      <header className="w-full flex items-center justify-between lg:justify-end min-h-[52px] h-[52px] px-4 gap-4">
+        <Link href={`/${params.type}`}>
+          <MoveLeft className="lg:hidden" />
+        </Link>
         <a
           className="text-xs hover:underline"
           href={`https://news.ycombinator.com/item?id=${params.id}`}
@@ -34,7 +38,7 @@ export default async function PostPage({ params }: { params: { type: string; id:
             href={post.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-muted-foreground"
+            className="text-xs text-muted-foreground break-all"
           >
             {post.url}
           </a>

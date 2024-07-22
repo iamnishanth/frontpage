@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <div className="min-h-[100dvh] max-h-[100dvh] h-[100dvh] overflow-hidden border border-input rounded-md md:flex">
+          <div className="min-h-[100dvh] max-h-[100dvh] h-[100dvh] overflow-hidden lg:border lg:border-input rounded-md md:flex">
             <Sidebar />
             {children}
           </div>

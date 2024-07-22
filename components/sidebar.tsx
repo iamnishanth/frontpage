@@ -9,7 +9,7 @@ import { buttonVariants } from "./ui/button";
 
 export const Sidebar = () => {
   return (
-    <aside className="border-r border-input hidden md:block">
+    <aside className="border-r border-input hidden lg:block relative">
       <header className="w-[256px] h-[52px] px-2 flex items-center gap-2">
         <Link
           href="/"
@@ -36,29 +36,44 @@ export const Sidebar = () => {
           ))}
         </nav>
       </section>
+      <section className="absolute bottom-0 w-full flex flex-col gap-2 items-center justify-center p-6">
+        <p className="text-xs">
+          Made with ♥ by{" "}
+          <a className="hover:underline" href="https://github.com/iamnishanth">
+            @iamnishanth
+          </a>
+        </p>
+        <p className="text-xs">
+          Open Source{" "}
+          <a
+            className="text-xs hover:underline"
+            href="https://github.com/iamnishanth/frontpage"
+            target="_blank"
+            rel="noreferrer"
+          >
+            @Github
+          </a>
+        </p>
+      </section>
     </aside>
   );
 };
 
-const NAVLINKS = [
+export const NAVLINKS = [
   {
     url: "/news",
-    title: "Home",
+    title: "news",
   },
   {
     url: "/newest",
-    title: "New",
+    title: "newest",
   },
   {
     url: "/ask",
-    title: "Ask HN",
+    title: "ask",
   },
   {
     url: "/show",
-    title: "Show HN",
+    title: "show",
   },
-  // {
-  //   url: "/jobs",
-  //   title: "Jobs",
-  // },
 ];

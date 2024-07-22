@@ -33,7 +33,7 @@ export const PostCard = ({
           href={url}
           target="_blank"
           rel="noreferrer"
-          className="text-xs text-muted-foreground w-fit"
+          className="text-xs text-muted-foreground w-fit break-all"
         >
           {url}
         </a>

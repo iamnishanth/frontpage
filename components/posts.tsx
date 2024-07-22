@@ -10,7 +10,7 @@ export const Posts = async ({ type }: Posts) => {
   const postData = await getPosts(type);
 
   return (
-    <div className="flex-1 flex flex-col gap-4 p-4 overflow-scroll">
+    <div className="flex-1 flex flex-col gap-2 lg:gap-4 p-2 lg:p-4 overflow-scroll">
       {postData.hits.map((post: any) => (
         <PostCard
           key={post.story_id}
