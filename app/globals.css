@@ -73,7 +73,7 @@
   }
 }
 
-.post-text > p {
+.post-text>p {
   @apply my-4;
 }
 
@@ -87,4 +87,9 @@ pre {
 
 .comment a:hover {
   @apply underline;
+}
+
+.bg-dots {
+  background-image: radial-gradient(hsl(var(--accent)) 1px, transparent 0);
+  background-size: 24px 24px;
 }
