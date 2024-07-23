@@ -17,6 +17,21 @@ export type Item = {
   comments?: Item[];
 };
 
+export type AlgoliaItem = {
+  id: number;
+  created_at: string;
+  created_at_i: number;
+  type: string;
+  author: string;
+  title?: string;
+  url?: string;
+  text?: string;
+  points: number;
+  parent_id: number | null;
+  story_id: number | null;
+  children: AlgoliaItem[];
+};
+
 const ONE_MINUTE = 60;
 
 // Function to fetch item details by ID
@@ -74,8 +89,14 @@ export const getStories = async (type: "new" | "top" | "best" | "ask" | "show" |
     next: { revalidate: ONE_MINUTE },
   });
   let data: number[] = await response.json();
-  data = data.slice(0, 50); // fetch first 50 stories
+  data = data.slice(0, 30); // fetch first 30 stories
 
   const storyPromises = data.map((storyId) => fetchItem(storyId));
   return Promise.all(storyPromises);
+};
+
+export const getItem = async (id: number): Promise<AlgoliaItem> => {
+  const response = await fetch(`https://hn.algolia.com/api/v1/items/${id}`);
+  const data = await response.json();
+  return data;
 };

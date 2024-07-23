@@ -6,11 +6,19 @@ import { ArrowUp, MoveLeft } from "lucide-react";
 import { Comments } from "@/components/comments";
 import { Separator } from "@/components/ui/separator";
 
-import { getStoryWithComments } from "@/lib/api";
+import {
+  getItem,
+  /*getStoryWithComments*/
+} from "@/lib/api";
 import { getTimeAgo } from "@/lib/utils";
 
 export default async function PostPage({ params }: { params: { type: string; id: string } }) {
-  const post = await getStoryWithComments(+params.id);
+  // const post = await getStoryWithComments(+params.id);
+  // if (!post) {
+  //   return notFound();
+  // }
+
+  const post = await getItem(+params.id);
   if (!post) {
     return notFound();
   }
@@ -32,7 +40,7 @@ export default async function PostPage({ params }: { params: { type: string; id:
       </header>
       <Separator />
       <div className="p-4 overflow-scroll">
-        <h1 className="text-2xl font-extrabold mb-2">{post.title}</h1>
+        <h1 className="text-2xl font-extrabold mb-2">{post.title || ""}</h1>
         {post.url && (
           <a
             href={post.url}
@@ -46,12 +54,12 @@ export default async function PostPage({ params }: { params: { type: string; id:
         <div className="text-xs text-muted-foreground mt-4 font-bold flex gap-1">
           <span className="flex items-center gap-1">
             <ArrowUp size={14} />
-            {post.score}
+            {post.points}
           </span>
           <span>•</span>
-          <span>{post.by}</span>
+          <span>{post.author}</span>
           <span>•</span>
-          <span>{getTimeAgo(post.time)}</span>
+          <span>{getTimeAgo(post.created_at_i)}</span>
         </div>
         {post.text && (
           <div
@@ -59,10 +67,10 @@ export default async function PostPage({ params }: { params: { type: string; id:
             dangerouslySetInnerHTML={{ __html: post.text }}
           ></div>
         )}
-        {post.comments && post.comments.length > 0 && (
+        {post.children && post.children.length > 0 && (
           <section className="mt-4">
             <h1 className="font-bold text-lg">Comments</h1>
-            <Comments comments={post.comments} />
+            <Comments comments={post.children} />
           </section>
         )}
       </div>

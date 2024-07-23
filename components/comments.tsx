@@ -1,11 +1,11 @@
-import type { Item } from "@/lib/api";
+import type { AlgoliaItem } from "@/lib/api";
 import { cn, getTimeAgo } from "@/lib/utils";
 
-export const Comments = ({ comments, depth = 0 }: { comments: Item[]; depth?: number }) => {
+export const Comments = ({ comments, depth = 0 }: { comments: AlgoliaItem[]; depth?: number }) => {
   return (
     <>
       {comments.map((comment) => {
-        if (comment.deleted || comment.dead) return null;
+        // if (comment.deleted || comment.dead) return null;
 
         return (
           <details
@@ -20,9 +20,11 @@ export const Comments = ({ comments, depth = 0 }: { comments: Item[]; depth?: nu
             data-id={comment.id}
           >
             <summary>
-              <span className="text-xs text-muted-foreground mr-1">{comment.by}</span>
+              <span className="text-xs text-muted-foreground mr-1">{comment.author}</span>
               <span className="text-xs text-muted-foreground mr-1">•</span>
-              <span className="text-xs text-muted-foreground">{getTimeAgo(comment.time)}</span>
+              <span className="text-xs text-muted-foreground">
+                {getTimeAgo(comment.created_at_i)}
+              </span>
             </summary>
             {/* TODO: Sanitize HTML and modify anchor tags to open in new tab */}
             {comment.text && (
@@ -31,7 +33,7 @@ export const Comments = ({ comments, depth = 0 }: { comments: Item[]; depth?: nu
                 dangerouslySetInnerHTML={{ __html: comment.text }}
               ></div>
             )}
-            {comment.comments && <Comments comments={comment.comments} depth={depth + 1} />}
+            {comment.children && <Comments comments={comment.children} depth={depth + 1} />}
           </details>
         );
       })}
