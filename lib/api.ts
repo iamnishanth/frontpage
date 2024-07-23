@@ -1,47 +1,74 @@
-const TEN_MINUTES = 10 * 60;
+export type Item = {
+  id: number;
+  deleted?: boolean;
+  type: "story" | "comment" | "job" | "poll" | "pollopt";
+  by?: string;
+  time: number;
+  text?: string;
+  dead?: boolean;
+  parent?: number;
+  poll?: number;
+  kids?: number[];
+  url?: string;
+  score?: number;
+  title?: string;
+  parts?: number[];
+  descendants?: number;
+  comments?: Item[];
+};
 
-export const getPosts = async (type: string) => {
-  if (type === "news") {
-    const response = await fetch("https://hn.algolia.com/api/v1/search?tags=front_page", {
-      next: { revalidate: TEN_MINUTES },
+// Function to fetch item details by ID
+const fetchItem = async (id: number): Promise<Item> => {
+  const response = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
+  return await response.json();
+};
+
+// Recursive function to fetch comments and their sub-comments
+const fetchComments = (commentIds: number[]): Promise<Item[]> => {
+  if (!commentIds || commentIds.length === 0) {
+    return Promise.resolve([]);
+  }
+
+  // Fetch all comments concurrently
+  const commentPromises = commentIds.map((id: number) =>
+    fetchItem(id).then((comment) => {
+      if (comment.kids) {
+        // Fetch sub-comments recursively
+        return fetchComments(comment.kids).then((subComments) => {
+          comment.comments = subComments;
+          delete comment.kids; // Remove the kids field
+          return comment;
+        });
+      } else {
+        comment.comments = [];
+        return comment;
+      }
+    }),
+  );
+
+  return Promise.all(commentPromises);
+};
+
+// Function to get the story and populate all comments and sub-comments
+export const getStoryWithComments = async (storyId: number) => {
+  const story = await fetchItem(storyId);
+  if (story.kids) {
+    return fetchComments(story.kids).then((comments) => {
+      story.comments = comments;
+      delete story.kids; // Remove the kids field
+      return story;
     });
-    const data = await response.json();
-    return data;
-  } else if (type === "newest") {
-    const response = await fetch(
-      "https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=50",
-      { next: { revalidate: TEN_MINUTES } },
-    );
-    const data = await response.json();
-    return data;
-  } else if (type === "ask") {
-    const oneDayInSeconds = 24 * 60 * 60;
-    const timestamp24HoursAgo = Math.floor(Date.now() / 1000) - oneDayInSeconds;
-
-    const response = await fetch(
-      `https://hn.algolia.com/api/v1/search?tags=ask_hn&numericFilters=created_at_i>${timestamp24HoursAgo}&hitsPerPage=50`,
-      { next: { revalidate: TEN_MINUTES } },
-    );
-    const data = await response.json();
-    return data;
-  } else if (type === "show") {
-    const oneDayInSeconds = 24 * 60 * 60;
-    const timestamp24HoursAgo = Math.floor(Date.now() / 1000) - oneDayInSeconds;
-
-    const response = await fetch(
-      `https://hn.algolia.com/api/v1/search?tags=show_hn&numericFilters=created_at_i>${timestamp24HoursAgo}&hitsPerPage=50`,
-      { next: { revalidate: TEN_MINUTES } },
-    );
-    const data = await response.json();
-    return data;
+  } else {
+    story.comments = [];
+    return story;
   }
 };
 
-export const getPost = async (id: string) => {
-  const response = await fetch(`https://hn.algolia.com/api/v1/items/${id}`, {
-    next: { revalidate: TEN_MINUTES },
-  });
-  const data = await response.json();
+// Function to get the New, Top, Best, Ask, and Show
+export const getStories = async (type: "new" | "top" | "best" | "ask" | "show" | "job") => {
+  const response = await fetch(`https://hacker-news.firebaseio.com/v0/${type}stories.json`);
+  const data: number[] = await response.json();
 
-  return data;
+  const storyPromises = data.map((storyId) => fetchItem(storyId));
+  return Promise.all(storyPromises);
 };

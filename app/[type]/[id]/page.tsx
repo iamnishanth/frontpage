@@ -6,11 +6,11 @@ import { ArrowUp, MoveLeft } from "lucide-react";
 import { Comments } from "@/components/comments";
 import { Separator } from "@/components/ui/separator";
 
-import { getPost } from "@/lib/api";
+import { getStoryWithComments } from "@/lib/api";
 import { getTimeAgo } from "@/lib/utils";
 
 export default async function PostPage({ params }: { params: { type: string; id: string } }) {
-  const post = await getPost(params.id);
+  const post = await getStoryWithComments(+params.id);
   if (!post) {
     return notFound();
   }
@@ -46,12 +46,12 @@ export default async function PostPage({ params }: { params: { type: string; id:
         <div className="text-xs text-muted-foreground mt-4 font-bold flex gap-1">
           <span className="flex items-center gap-1">
             <ArrowUp size={14} />
-            {post.points}
+            {post.score}
           </span>
           <span>•</span>
-          <span>{post.author}</span>
+          <span>{post.by}</span>
           <span>•</span>
-          <span>{getTimeAgo(post.created_at_i)}</span>
+          <span>{getTimeAgo(post.time)}</span>
         </div>
         {post.text && (
           <div
@@ -59,10 +59,12 @@ export default async function PostPage({ params }: { params: { type: string; id:
             dangerouslySetInnerHTML={{ __html: post.text }}
           ></div>
         )}
-        <section className="mt-4">
-          <h1 className="font-bold text-lg">Comments</h1>
-          <Comments comments={post.children} />
-        </section>
+        {post.comments && post.comments.length > 0 && (
+          <section className="mt-4">
+            <h1 className="font-bold text-lg">Comments</h1>
+            <Comments comments={post.comments} />
+          </section>
+        )}
       </div>
     </div>
   );
