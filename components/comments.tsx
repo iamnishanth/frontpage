@@ -5,7 +5,7 @@ export const Comments = ({ comments, depth = 0 }: { comments: Item[]; depth?: nu
   return (
     <>
       {comments.map((comment) => {
-        if (comment.deleted) return null;
+        if (comment.deleted || comment.dead) return null;
 
         return (
           <details
@@ -17,6 +17,7 @@ export const Comments = ({ comments, depth = 0 }: { comments: Item[]; depth?: nu
               depth === 0 && "pl-0",
             )}
             open={depth < 3}
+            data-id={comment.id}
           >
             <summary>
               <span className="text-xs text-muted-foreground mr-1">{comment.by}</span>
