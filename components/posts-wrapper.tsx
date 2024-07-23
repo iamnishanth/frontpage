@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 
 export const PostsWrapper = ({ children }: { children: React.ReactNode }) => {
   const params = useParams();
-  console.log(params);
 
   return (
     <div
