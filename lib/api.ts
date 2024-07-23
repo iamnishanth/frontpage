@@ -17,9 +17,13 @@ export type Item = {
   comments?: Item[];
 };
 
+const ONE_MINUTE = 60;
+
 // Function to fetch item details by ID
 const fetchItem = async (id: number): Promise<Item> => {
-  const response = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
+  const response = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`, {
+    next: { revalidate: ONE_MINUTE },
+  });
   return await response.json();
 };
 
@@ -66,7 +70,9 @@ export const getStoryWithComments = async (storyId: number) => {
 
 // Function to get the New, Top, Best, Ask, and Show
 export const getStories = async (type: "new" | "top" | "best" | "ask" | "show" | "job") => {
-  const response = await fetch(`https://hacker-news.firebaseio.com/v0/${type}stories.json`);
+  const response = await fetch(`https://hacker-news.firebaseio.com/v0/${type}stories.json`, {
+    next: { revalidate: ONE_MINUTE },
+  });
   const data: number[] = await response.json();
 
   const storyPromises = data.map((storyId) => fetchItem(storyId));
