@@ -73,7 +73,8 @@ export const getStories = async (type: "new" | "top" | "best" | "ask" | "show" |
   const response = await fetch(`https://hacker-news.firebaseio.com/v0/${type}stories.json`, {
     next: { revalidate: ONE_MINUTE },
   });
-  const data: number[] = await response.json();
+  let data: number[] = await response.json();
+  data = data.slice(0, 50); // fetch first 50 stories
 
   const storyPromises = data.map((storyId) => fetchItem(storyId));
   return Promise.all(storyPromises);
