@@ -32,12 +32,10 @@ export type AlgoliaItem = {
   children: AlgoliaItem[];
 };
 
-const ONE_MINUTE = 60;
-
 // Function to fetch item details by ID
 const fetchItem = async (id: number): Promise<Item> => {
   const response = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`, {
-    next: { revalidate: ONE_MINUTE },
+    cache: "no-store",
   });
   return await response.json();
 };
@@ -86,7 +84,7 @@ export const getStoryWithComments = async (storyId: number) => {
 // Function to get the New, Top, Best, Ask, and Show
 export const getStories = async (type: "new" | "top" | "best" | "ask" | "show" | "job") => {
   const response = await fetch(`https://hacker-news.firebaseio.com/v0/${type}stories.json`, {
-    next: { revalidate: ONE_MINUTE },
+    cache: "no-store",
   });
   let data: number[] = await response.json();
   data = data.slice(0, 30); // fetch first 30 stories
@@ -96,7 +94,7 @@ export const getStories = async (type: "new" | "top" | "best" | "ask" | "show" |
 };
 
 export const getItem = async (id: number): Promise<AlgoliaItem> => {
-  const response = await fetch(`https://hn.algolia.com/api/v1/items/${id}`);
+  const response = await fetch(`https://hn.algolia.com/api/v1/items/${id}`, { cache: "no-store" });
   const data = await response.json();
   return data;
 };
