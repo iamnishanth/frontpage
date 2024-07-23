@@ -1,5 +1,13 @@
 import Link from "next/link";
 
+import {
+  BriefcaseBusiness,
+  MessageCircleQuestion,
+  Newspaper,
+  Rocket,
+  Sparkles,
+} from "lucide-react";
+
 import { Separator } from "@/components/ui/separator";
 
 import { cn } from "@/lib/utils";
@@ -28,9 +36,10 @@ export const Sidebar = () => {
               exact={link.url === "/"}
               className={cn(
                 buttonVariants({ variant: "ghost", size: "sm" }),
-                "justify-start data-[active='true']:dark:bg-muted data-[active='true']:dark:text-white data-[active='true']:dark:hover:bg-muted data-[active='true']:dark:hover:text-white",
+                "justify-start data-[active='true']:dark:bg-muted data-[active='true']:dark:text-white data-[active='true']:dark:hover:bg-muted data-[active='true']:dark:hover:text-white flex items-center gap-2",
               )}
             >
+              <link.icon size={14} />
               {link.title}
             </NavLink>
           ))}
@@ -63,17 +72,26 @@ export const NAVLINKS = [
   {
     url: "/news",
     title: "news",
+    icon: Newspaper,
   },
   {
     url: "/newest",
     title: "newest",
+    icon: Sparkles,
   },
   {
     url: "/ask",
     title: "ask",
+    icon: MessageCircleQuestion,
   },
   {
     url: "/show",
     title: "show",
+    icon: Rocket,
+  },
+  {
+    url: "/jobs",
+    title: "jobs",
+    icon: BriefcaseBusiness,
   },
 ];
