@@ -36,7 +36,7 @@ export const Sidebar = () => {
               exact={link.url === "/"}
               className={cn(
                 buttonVariants({ variant: "ghost", size: "sm" }),
-                "justify-start data-[active='true']:dark:bg-muted data-[active='true']:dark:text-white data-[active='true']:dark:hover:bg-muted data-[active='true']:dark:hover:text-white flex items-center gap-2",
+                "justify-start data-[active='true']:dark:bg-muted data-[active='true']:dark:text-white data-[active='true']:dark:hover:bg-muted data-[active='true']:dark:hover:text-white data-[active='true']:bg-muted flex items-center gap-2",
               )}
             >
               <link.icon size={14} />
