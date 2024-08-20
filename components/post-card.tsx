@@ -39,19 +39,18 @@ export const PostCard = ({ to, title, url, score, by, time, descendants }: PostC
               <ArrowUp size={14} />
               {score}
             </span>
-            <span>•</span>
           </>
         )}
         {by && (
           <>
-            <span>{by}</span>
             <span>•</span>
+            <span>{by}</span>
           </>
         )}
         {time && (
           <>
-            <span>{getTimeAgo(time)}</span>
             <span>•</span>
+            <span>{getTimeAgo(time)}</span>
           </>
         )}
         {descendants !== undefined && <span>{descendants} comments</span>}
