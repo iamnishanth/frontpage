@@ -10,7 +10,7 @@ export const PostsWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       className={cn(
-        "flex flex-col w-1/2 border-r border-input",
+        "flex flex-col w-1/2 max-w-2xl border-r border-input",
         params.id && "hidden lg:flex",
         !params.id && "w-full lg:w-1/2",
       )}
