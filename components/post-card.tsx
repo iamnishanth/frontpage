@@ -55,7 +55,12 @@ export const PostCard = ({ to, title, url, score, by, time, descendants }: PostC
             <span>{getTimeAgo(time)}</span>
           </>
         )}
-        {descendants !== undefined && <span>{descendants} comments</span>}
+        {descendants !== undefined && (
+          <>
+            <span>•</span>
+            <span>{descendants} comments</span>
+          </>
+        )}
       </div>
     </div>
   );
