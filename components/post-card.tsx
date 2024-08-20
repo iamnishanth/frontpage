@@ -4,6 +4,8 @@ import { ArrowUp } from "lucide-react";
 
 import { getTimeAgo } from "@/lib/utils";
 
+import { NavLink } from "./nav-link";
+
 type PostCardProps = {
   to: string;
   title?: string;
@@ -16,11 +18,11 @@ type PostCardProps = {
 
 export const PostCard = ({ to, title, url, score, by, time, descendants }: PostCardProps) => {
   return (
-    <div className="w-full hover:bg-accent border rounded-lg p-4">
+    <div className="w-full hover:bg-accent border rounded-lg p-4 has-[a[data-active='true']]:bg-accent">
       <div className="flex flex-col gap-1">
-        <Link href={to}>
+        <NavLink href={to}>
           <h1 className="font-semibold">{title || ""}</h1>
-        </Link>
+        </NavLink>
         {url && (
           <a
             href={url}
