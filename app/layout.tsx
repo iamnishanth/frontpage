@@ -3,7 +3,6 @@ import { Inter as FontSans } from "next/font/google";
 
 import { Sidebar } from "@/components/sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Separator } from "@/components/ui/separator";
 
 import { cn } from "@/lib/utils";
 

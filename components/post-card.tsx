@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { ArrowUp } from "lucide-react";
 
 import { getTimeAgo } from "@/lib/utils";
