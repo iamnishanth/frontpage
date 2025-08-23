@@ -19,7 +19,7 @@ export const PostCard = ({ to, title, url, score, by, time, descendants }: PostC
     <div className="w-full hover:bg-accent border rounded-lg p-4 has-[a[data-active='true']]:bg-accent">
       <div className="flex flex-col gap-1">
         <NavLink href={to}>
-          <h1 className="font-semibold">{title || ""}</h1>
+          <h1 className="font-semibold break-all">{title || ""}</h1>
         </NavLink>
         {url && (
           <a
