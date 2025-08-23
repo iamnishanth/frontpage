@@ -32,3 +32,10 @@ export function getTimeAgo(timestamp: number): string {
 
   return "just now";
 }
+
+export function truncateUrl(url: string, maxLength: number = 100): string {
+  if (url.length <= maxLength) return url;
+
+  // Truncate and add ellipsis
+  return url.substring(0, maxLength - 3) + "...";
+}

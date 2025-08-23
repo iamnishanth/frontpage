@@ -1,6 +1,6 @@
 import { ArrowUp } from "lucide-react";
 
-import { getTimeAgo } from "@/lib/utils";
+import { getTimeAgo, truncateUrl } from "@/lib/utils";
 
 import { NavLink } from "./nav-link";
 
@@ -26,9 +26,10 @@ export const PostCard = ({ to, title, url, score, by, time, descendants }: PostC
             href={url}
             target="_blank"
             rel="noreferrer"
-            className="text-xs text-muted-foreground w-fit break-all hover:underline"
+            className="text-xs text-muted-foreground w-fit hover:underline"
+            title={url}
           >
-            {url}
+            {truncateUrl(url)}
           </a>
         )}
       </div>

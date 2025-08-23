@@ -1,3 +1,12 @@
+// Frontend post types (user-facing routes)
+export type PostType = "news" | "newest" | "ask" | "show" | "jobs";
+
+// API post types (HackerNews API endpoints)
+export type ApiPostType = "new" | "top" | "best" | "ask" | "show" | "job";
+
+// Valid post types array for validation
+export const VALID_POST_TYPES: PostType[] = ["news", "newest", "ask", "show", "jobs"];
+
 export type Item = {
   id: number;
   deleted?: boolean;
@@ -82,12 +91,12 @@ export const getStoryWithComments = async (storyId: number) => {
 };
 
 // Function to get the New, Top, Best, Ask, and Show
-export const getStories = async (type: "new" | "top" | "best" | "ask" | "show" | "job") => {
+export const getStories = async (type: ApiPostType, offset = 0, limit = 30) => {
   const response = await fetch(`https://hacker-news.firebaseio.com/v0/${type}stories.json`, {
     cache: "no-store",
   });
   let data: number[] = await response.json();
-  data = data.slice(0, 30); // fetch first 30 stories
+  data = data.slice(offset, offset + limit); // fetch stories with pagination
 
   const storyPromises = data.map((storyId) => fetchItem(storyId));
   return Promise.all(storyPromises);
@@ -97,4 +106,20 @@ export const getItem = async (id: number): Promise<AlgoliaItem> => {
   const response = await fetch(`https://hn.algolia.com/api/v1/items/${id}`, { cache: "no-store" });
   const data = await response.json();
   return data;
+};
+
+// Helper function to map frontend types to API types
+const mapPostType = (type: PostType): ApiPostType => {
+  if (type === "news") return "top";
+  else if (type === "newest") return "new";
+  else if (type === "ask") return "ask";
+  else if (type === "show") return "show";
+  else if (type === "jobs") return "job";
+  return "best";
+};
+
+// Function to load more posts with type mapping
+export const loadMorePosts = async (type: PostType, offset: number, limit: number = 30) => {
+  const postType = mapPostType(type);
+  return await getStories(postType, offset, limit);
 };

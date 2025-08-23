@@ -2,20 +2,23 @@ import { Suspense } from "react";
 
 import { notFound } from "next/navigation";
 
-import { Posts } from "@/components/posts";
 import { PostsHeader } from "@/components/posts-header";
 import { PostsLoading } from "@/components/posts-loading";
+import { PostsServer } from "@/components/posts-server";
 import { PostsWrapper } from "@/components/posts-wrapper";
 import { Separator } from "@/components/ui/separator";
+
+import type { PostType } from "@/lib/api";
+import { VALID_POST_TYPES } from "@/lib/api";
 
 export default function PostsLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { type: "news" | "newest" | "ask" | "show" | "jobs" };
+  params: { type: PostType };
 }) {
-  if (["news", "newest", "ask", "show", "jobs"].indexOf(params.type) === -1) {
+  if (!VALID_POST_TYPES.includes(params.type)) {
     return notFound();
   }
 
@@ -25,7 +28,7 @@ export default function PostsLayout({
         <PostsHeader type={params.type} />
         <Separator />
         <Suspense fallback={<PostsLoading />}>
-          <Posts type={params.type} />
+          <PostsServer type={params.type} />
         </Suspense>
       </PostsWrapper>
       {children}

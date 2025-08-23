@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 
 import { ChevronDown } from "lucide-react";
 
+import type { PostType } from "@/lib/api";
+
 import { NAVLINKS } from "./sidebar";
 import {
   DropdownMenu,
@@ -12,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-export const PostsHeader = ({ type }: { type: string }) => {
+export const PostsHeader = ({ type }: { type: PostType }) => {
   const router = useRouter();
 
   return (
