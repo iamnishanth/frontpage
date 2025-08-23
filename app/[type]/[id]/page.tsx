@@ -6,18 +6,10 @@ import { ArrowUp, MoveLeft } from "lucide-react";
 import { Comments } from "@/components/comments";
 import { Separator } from "@/components/ui/separator";
 
-import {
-  getItem,
-  /*getStoryWithComments*/
-} from "@/lib/api";
+import { getItem } from "@/lib/api";
 import { getTimeAgo } from "@/lib/utils";
 
 export default async function PostPage({ params }: { params: { type: string; id: string } }) {
-  // const post = await getStoryWithComments(+params.id);
-  // if (!post) {
-  //   return notFound();
-  // }
-
   const post = await getItem(+params.id);
   if (!post) {
     return notFound();

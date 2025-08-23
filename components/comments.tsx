@@ -5,8 +5,6 @@ export const Comments = ({ comments, depth = 0 }: { comments: AlgoliaItem[]; dep
   return (
     <>
       {comments.map((comment) => {
-        // if (comment.deleted || comment.dead) return null;
-
         return (
           <details
             key={comment.id}
