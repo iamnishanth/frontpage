@@ -26,7 +26,7 @@ export const PostCard = ({ to, title, url, score, by, time, descendants }: PostC
             href={url}
             target="_blank"
             rel="noreferrer"
-            className="text-xs text-muted-foreground w-fit hover:underline"
+            className="text-xs text-muted-foreground w-fit break-all hover:underline"
             title={url}
           >
             {truncateUrl(url)}
