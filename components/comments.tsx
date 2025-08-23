@@ -1,5 +1,37 @@
+import sanitizeHtml from "sanitize-html";
+
 import type { AlgoliaItem } from "@/lib/api";
 import { cn, getTimeAgo } from "@/lib/utils";
+
+// Function to sanitize HTML and modify anchor tags to open in new tab
+const sanitizeAndModifyHtml = (html: string): string => {
+  const cleanHtml = sanitizeHtml(html, {
+    allowedAttributes: {
+      a: ["href", "title", "target", "rel", "style"],
+    },
+    // Transform all anchor tags to open in new tab
+    transformTags: {
+      a: (_tagName, attribs) => {
+        return {
+          tagName: "a",
+          attribs: {
+            ...attribs,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            style: "text-decoration: underline;",
+          },
+        };
+      },
+    },
+    allowedStyles: {
+      "*": {
+        "text-decoration": [/^underline$/],
+      },
+    },
+  });
+
+  return cleanHtml;
+};
 
 export const Comments = ({ comments, depth = 0 }: { comments: AlgoliaItem[]; depth?: number }) => {
   return (
@@ -24,11 +56,10 @@ export const Comments = ({ comments, depth = 0 }: { comments: AlgoliaItem[]; dep
                 {getTimeAgo(comment.created_at_i)}
               </span>
             </summary>
-            {/* TODO: Sanitize HTML and modify anchor tags to open in new tab */}
             {comment.text && (
               <div
                 className="whitespace-pre-wrap break-words text-sm pb-2"
-                dangerouslySetInnerHTML={{ __html: comment.text }}
+                dangerouslySetInnerHTML={{ __html: sanitizeAndModifyHtml(comment.text) }}
               ></div>
             )}
             {comment.children && <Comments comments={comment.children} depth={depth + 1} />}
