@@ -7,7 +7,7 @@ import { Comments } from "@/components/comments";
 import { Separator } from "@/components/ui/separator";
 
 import { getItem } from "@/lib/api";
-import { getTimeAgo } from "@/lib/utils";
+import { getTimeAgo, sanitizeAndModifyHtml } from "@/lib/utils";
 
 export default async function PostPage({ params }: { params: { type: string; id: string } }) {
   const post = await getItem(+params.id);
@@ -56,7 +56,7 @@ export default async function PostPage({ params }: { params: { type: string; id:
         {post.text && (
           <div
             className="mt-4 text-sm post-text"
-            dangerouslySetInnerHTML={{ __html: post.text }}
+            dangerouslySetInnerHTML={{ __html: sanitizeAndModifyHtml(post.text) }}
           ></div>
         )}
         {post.children && post.children.length > 0 && (

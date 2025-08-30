@@ -73,7 +73,7 @@
   }
 }
 
-.post-text>p {
+.post-text > p {
   @apply my-4;
 }
 
@@ -81,11 +81,13 @@ pre {
   white-space: pre-wrap;
 }
 
-.comment a {
+.comment a,
+.post-text a {
   @apply text-muted-foreground;
 }
 
-.comment a:hover {
+.comment a:hover,
+.post-text a:hover {
   @apply underline;
 }
 

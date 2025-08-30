@@ -39,3 +39,35 @@ export function truncateUrl(url: string, maxLength: number = 100): string {
   // Truncate and add ellipsis
   return url.substring(0, maxLength - 3) + "...";
 }
+
+// Function to sanitize HTML and modify anchor tags to open in new tab
+export function sanitizeAndModifyHtml(html: string): string {
+  const sanitizeHtml = require("sanitize-html");
+
+  const cleanHtml = sanitizeHtml(html, {
+    allowedAttributes: {
+      a: ["href", "title", "target", "rel", "style"],
+    },
+    // Transform all anchor tags to open in new tab
+    transformTags: {
+      a: (_tagName: any, attribs: any) => {
+        return {
+          tagName: "a",
+          attribs: {
+            ...attribs,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            style: "text-decoration: underline;",
+          },
+        };
+      },
+    },
+    allowedStyles: {
+      "*": {
+        "text-decoration": [/^underline$/],
+      },
+    },
+  });
+
+  return cleanHtml;
+}

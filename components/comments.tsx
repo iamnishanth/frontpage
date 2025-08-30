@@ -1,37 +1,5 @@
-import sanitizeHtml from "sanitize-html";
-
 import type { AlgoliaItem } from "@/lib/api";
-import { cn, getTimeAgo } from "@/lib/utils";
-
-// Function to sanitize HTML and modify anchor tags to open in new tab
-const sanitizeAndModifyHtml = (html: string): string => {
-  const cleanHtml = sanitizeHtml(html, {
-    allowedAttributes: {
-      a: ["href", "title", "target", "rel", "style"],
-    },
-    // Transform all anchor tags to open in new tab
-    transformTags: {
-      a: (_tagName, attribs) => {
-        return {
-          tagName: "a",
-          attribs: {
-            ...attribs,
-            target: "_blank",
-            rel: "noopener noreferrer",
-            style: "text-decoration: underline;",
-          },
-        };
-      },
-    },
-    allowedStyles: {
-      "*": {
-        "text-decoration": [/^underline$/],
-      },
-    },
-  });
-
-  return cleanHtml;
-};
+import { cn, getTimeAgo, sanitizeAndModifyHtml } from "@/lib/utils";
 
 export const Comments = ({ comments, depth = 0 }: { comments: AlgoliaItem[]; depth?: number }) => {
   return (
