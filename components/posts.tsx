@@ -48,7 +48,14 @@ export const Posts = ({ type, initialPosts }: PostsProps) => {
     try {
       const newPosts = await loadMorePosts(type, posts.length, 30);
       if (newPosts.length > 0) {
-        setPosts((prev) => [...prev, ...newPosts]);
+        // Filter out duplicates based on post ID
+        const existingIds = new Set(posts.map((post) => post.id));
+        const uniqueNewPosts = newPosts.filter((post) => !existingIds.has(post.id));
+
+        if (uniqueNewPosts.length > 0) {
+          setPosts((prev) => [...prev, ...uniqueNewPosts]);
+        }
+
         // If we got fewer posts than requested, we've reached the end
         if (newPosts.length < 30) {
           setHasMore(false);
