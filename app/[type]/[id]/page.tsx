@@ -32,13 +32,13 @@ export default async function PostPage({ params }: { params: { type: string; id:
       </header>
       <Separator />
       <div className="p-4 overflow-scroll">
-        <h1 className="text-2xl font-extrabold mb-2 break-all">{post.title || ""}</h1>
+        <h1 className="text-2xl font-extrabold mb-2 break-words">{post.title || ""}</h1>
         {post.url && (
           <a
             href={post.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-muted-foreground break-all hover:underline"
+            className="text-xs text-muted-foreground break-words hover:underline"
           >
             {post.url}
           </a>
