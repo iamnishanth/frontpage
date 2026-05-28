@@ -9,8 +9,9 @@ import { Separator } from "@/components/ui/separator";
 import { getItem } from "@/lib/api";
 import { getTimeAgo, sanitizeAndModifyHtml } from "@/lib/utils";
 
-export default async function PostPage({ params }: { params: { type: string; id: string } }) {
-  const post = await getItem(+params.id);
+export default async function PostPage({ params }: { params: Promise<{ type: string; id: string }> }) {
+  const { type, id } = await params;
+  const post = await getItem(+id);
   if (!post) {
     return notFound();
   }
@@ -18,12 +19,12 @@ export default async function PostPage({ params }: { params: { type: string; id:
   return (
     <div className="flex-1 flex flex-col">
       <header className="w-full flex items-center justify-between min-h-[52px] h-[52px] px-4 gap-4">
-        <Link href={`/${params.type}`}>
+        <Link href={`/${type}`}>
           <MoveLeft />
         </Link>
         <a
           className="text-xs hover:underline"
-          href={`https://news.ycombinator.com/item?id=${params.id}`}
+          href={`https://news.ycombinator.com/item?id=${id}`}
           target="_blank"
           rel="noopener noreferrer"
         >

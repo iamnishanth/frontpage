@@ -11,24 +11,26 @@ import { Separator } from "@/components/ui/separator";
 import type { PostType } from "@/lib/api";
 import { VALID_POST_TYPES } from "@/lib/api";
 
-export default function PostsLayout({
+export default async function PostsLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { type: PostType };
+  params: Promise<{ type: string }>;
 }) {
-  if (!VALID_POST_TYPES.includes(params.type)) {
+  const { type: rawType } = await params;
+  const type = rawType as PostType;
+  if (!VALID_POST_TYPES.includes(type)) {
     return notFound();
   }
 
   return (
     <div className="flex-1 flex min-h-[100dvh] max-h-[100dvh] h-[100dvh]">
       <PostsWrapper>
-        <PostsHeader type={params.type} />
+        <PostsHeader type={type} />
         <Separator />
         <Suspense fallback={<PostsLoading />}>
-          <PostsServer type={params.type} />
+          <PostsServer type={type} />
         </Suspense>
       </PostsWrapper>
       {children}
