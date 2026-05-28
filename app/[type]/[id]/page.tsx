@@ -22,7 +22,7 @@ export default async function PostPage({
 
   return (
     <div className="flex-1 flex flex-col">
-      <header className="w-full flex items-center justify-between min-h-[52px] h-[52px] px-4 gap-4">
+      <header className="w-full flex items-center justify-between min-h-13 h-13 px-4 gap-4">
         <Link href={`/${type}`}>
           <MoveLeft />
         </Link>
@@ -37,13 +37,13 @@ export default async function PostPage({
       </header>
       <Separator />
       <div className="p-4 overflow-scroll">
-        <h1 className="text-2xl font-extrabold mb-2 break-words">{post.title || ""}</h1>
+        <h1 className="text-2xl font-extrabold mb-2 wrap-break-word">{post.title || ""}</h1>
         {post.url && (
           <a
             href={post.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-muted-foreground break-words hover:underline"
+            className="text-xs text-muted-foreground wrap-break-word hover:underline"
           >
             {post.url}
           </a>

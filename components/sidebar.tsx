@@ -18,7 +18,7 @@ import { buttonVariants } from "./ui/button";
 export const Sidebar = () => {
   return (
     <aside className="border-r border-input hidden lg:block relative">
-      <header className="w-[256px] h-[52px] px-2 flex items-center gap-2">
+      <header className="w-64 h-13 px-2 flex items-center gap-2">
         <Link
           href="/"
           className="h-9 w-full rounded-md flex items-center gap-2 text-xl font-bold shadow-sm px-3"
@@ -28,7 +28,7 @@ export const Sidebar = () => {
       </header>
       <Separator />
       <section className="flex flex-col gap-4 py-2">
-        <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center">
+        <nav className="grid gap-1 px-2 group-data-[collapsed=true]:justify-center">
           {NAVLINKS.map((link, index) => (
             <NavLink
               key={index}

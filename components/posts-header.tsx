@@ -18,10 +18,10 @@ export const PostsHeader = ({ type }: { type: PostType }) => {
   const router = useRouter();
 
   return (
-    <header className="w-full flex items-center justify-between h-[52px] px-4">
+    <header className="w-full flex items-center justify-between h-13 px-4">
       <h1 className="text-xl font-bold lg:hidden">fp.</h1>
       <DropdownMenu>
-        <DropdownMenuTrigger className="font-bold text-xl w-fit flex items-center gap-2 !outline-none !ring-0 !border-0 !ring-offset-0">
+        <DropdownMenuTrigger className="font-bold text-xl w-fit flex items-center gap-2 outline-none! ring-0! border-0! ring-offset-0!">
           {type} <ChevronDown size={16} />
         </DropdownMenuTrigger>
         <DropdownMenuContent>

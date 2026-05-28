@@ -26,7 +26,7 @@ export const Comments = ({ comments, depth = 0 }: { comments: AlgoliaItem[]; dep
             </summary>
             {comment.text && (
               <div
-                className="whitespace-pre-wrap break-words text-sm pb-2"
+                className="whitespace-pre-wrap wrap-break-word text-sm pb-2"
                 dangerouslySetInnerHTML={{ __html: sanitizeAndModifyHtml(comment.text) }}
               ></div>
             )}
