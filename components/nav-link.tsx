@@ -3,8 +3,10 @@
 import Link, { LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
 
-interface NavLinkProps
-  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> {
+interface NavLinkProps extends Omit<
+  React.AnchorHTMLAttributes<HTMLAnchorElement>,
+  keyof LinkProps
+> {
   href: string;
   exact?: boolean;
   children: React.ReactNode;

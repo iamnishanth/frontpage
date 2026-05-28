@@ -9,7 +9,11 @@ import { Separator } from "@/components/ui/separator";
 import { getItem } from "@/lib/api";
 import { getTimeAgo, sanitizeAndModifyHtml } from "@/lib/utils";
 
-export default async function PostPage({ params }: { params: Promise<{ type: string; id: string }> }) {
+export default async function PostPage({
+  params,
+}: {
+  params: Promise<{ type: string; id: string }>;
+}) {
   const { type, id } = await params;
   const post = await getItem(+id);
   if (!post) {
