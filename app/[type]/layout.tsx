@@ -25,7 +25,7 @@ export default async function PostsLayout({
   }
 
   return (
-    <div className="flex-1 flex min-h-[100dvh] max-h-[100dvh] h-[100dvh]">
+    <div className="flex-1 flex min-h-dvh max-h-dvh h-dvh">
       <PostsWrapper>
         <PostsHeader type={type} />
         <Separator />
