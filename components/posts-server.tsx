@@ -10,5 +10,5 @@ type PostsServerProps = {
 export const PostsServer = async ({ type }: PostsServerProps) => {
   const initialPosts = await loadMorePosts(type, 0, 30);
 
-  return <Posts type={type} initialPosts={initialPosts} />;
+  return <Posts key={type} type={type} initialPosts={initialPosts} />;
 };

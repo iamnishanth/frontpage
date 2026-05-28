@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFormStatus } from "react-dom";
 
 import { loadMorePosts } from "@/lib/api";
@@ -37,12 +37,6 @@ function LoadMoreButton({ hasMore }: { hasMore: boolean }) {
 export const Posts = ({ type, initialPosts }: PostsProps) => {
   const [posts, setPosts] = useState(initialPosts);
   const [hasMore, setHasMore] = useState(initialPosts.length >= 30);
-
-  // Reset state when type or initialPosts change
-  useEffect(() => {
-    setPosts(initialPosts);
-    setHasMore(initialPosts.length >= 30);
-  }, [type, initialPosts]);
 
   const handleLoadMore = async () => {
     try {
