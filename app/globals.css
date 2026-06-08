@@ -121,6 +121,10 @@ pre {
 }
 
 .bg-dots {
-  background-image: radial-gradient(hsl(var(--accent)) 1px, transparent 0);
+  background-image: radial-gradient(hsl(240 4.8% 95.9%) 1px, transparent 0);
   background-size: 24px 24px;
+}
+
+.dark .bg-dots {
+  background-image: radial-gradient(hsl(240 5% 25%) 1px, transparent 0);
 }

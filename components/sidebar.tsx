@@ -47,12 +47,6 @@ export const Sidebar = () => {
       </section>
       <section className="absolute bottom-0 w-full flex flex-col gap-2 items-center justify-center p-6">
         <p className="text-xs">
-          Made with ♥ by{" "}
-          <a className="hover:underline" href="https://github.com/iamnishanth">
-            @iamnishanth
-          </a>
-        </p>
-        <p className="text-xs">
           Open Source{" "}
           <a
             className="text-xs hover:underline"
